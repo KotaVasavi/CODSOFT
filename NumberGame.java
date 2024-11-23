@@ -3,29 +3,29 @@ import java.util.Scanner;
 
 class NumberGame {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sObj = new Scanner(System.in);
         Random random = new Random();
         int score = 0;
         String playAgain;
         int round = 1;
-        int baseMinRange = 0;  // Starting minimum range
-        int baseMaxRange = 100; // Starting maximum range
-        int rangeIncrement = 50;  // Increase both minimum and maximum range for each round
+        int baseMinRange = 0;  
+        int baseMaxRange = 100;
+        int rangeIncrement = 50; 
 
         System.out.println("Hi! Hello, Welcome to Number Game");
         System.out.println("Your task is to Guess the number,The score is based on number of attempts left. All the Best!");
         do {
 
-            int minRange = baseMinRange + (rangeIncrement * (round - 1));  // Minimum range increases for each round
-            int maxRange = baseMaxRange + (rangeIncrement * (round - 1));  // Maximum range increases for  each round
-            int randomNumber = random.nextInt(maxRange - minRange + 1) + minRange;  // Random number within minRange and maxRange
-            boolean guessedCorrectly = false;  // To track if the user guessed the number
+            int minRange = baseMinRange + (rangeIncrement * (round - 1));  
+            int maxRange = baseMaxRange + (rangeIncrement * (round - 1)); 
+            int randomNumber = random.nextInt(maxRange - minRange + 1) + minRange;  
+            boolean guessedCorrectly = false; 
 
             System.out.println("Round " + round + ": Guess the number (between " + minRange + " and " + maxRange + ")! You have 4 attempts.");
 
             for (int attempts = 1; attempts <= 4; attempts++) {
                 System.out.print("Enter your guess: ");
-                int userGuess = scanner.nextInt();
+                int userGuess = sObj.nextInt();
 
                  // Check if the user's guess is out of the valid range
                  if (userGuess < minRange || userGuess > maxRange) {
@@ -53,16 +53,22 @@ class NumberGame {
             System.out.println("Your current score is: " + score);
 
             // Ask if the user wants to play another round
-            System.out.print("Do you want to play again? (yes/no): ");
-            playAgain = scanner.next();
+            System.out.print("Do you want to play again? (y/n): ");
+            playAgain = sObj.next();
 
-            if (playAgain.equalsIgnoreCase("yes")) {
-                round++;  // Increase round counter for the next round
+            if (playAgain.equalsIgnoreCase("y")) {
+                round++;  
             }
 
-        } while (playAgain.equalsIgnoreCase("yes"));
-
+        } while (playAgain.equalsIgnoreCase("y"));
+        if(playAgain!="n" && playAgain!="y"){
+        System.out.println("As the input is not y exiting the game");
         System.out.println("Thank you for playing! Your final score is: " + score);
+        }else{
+        System.out.println("Thank you for playing! Your final score is: " + score);
+        System.out.println("Existing the Game..!");
+        }
+        sObj.close();
     }
     // Method to give feedback
     public static void giveFeedback(int userGuess, int randomNumber, int attempts, int maxAttempts) {
