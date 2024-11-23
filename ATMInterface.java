@@ -30,7 +30,7 @@ class BankAccount {
     public void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
-            System.out.println("Successfully deposited $" + amount);
+            System.out.println("Successfully deposited " + amount);
         } else {
             System.out.println("Invalid deposit amount.");
         }
@@ -40,7 +40,7 @@ class BankAccount {
     public void withdraw(double amount) {
         if (amount > 0 && amount <= balance) {
             balance -= amount;
-            System.out.println("Successfully withdrew $" + amount);
+            System.out.println("Successfully withdrew " + amount);
         } else if (amount > balance) {
             System.out.println("Insufficient balance.");
         } else {
@@ -91,15 +91,34 @@ class ATM {
 
     // Change password
     public void changePassword(Scanner scanner) {
-        System.out.print("Enter current password: ");
+        boolean status=false;
+        int attempts=0;
+        System.out.print("Enter previous password: ");
+        while(status!=true){
         String currentPassword = scanner.next();
         if (account.validatePassword(currentPassword)) {
             System.out.print("Enter new password: ");
             String newPassword = scanner.next();
             account.changePassword(newPassword);
+            status=true;
         } else {
-            System.out.println("Incorrect password. Unable to change password.");
+            System.out.println("Incorrect password.Try again");
+            status=false;
+            attempts++;
+            if(attempts==3){
+                System.out.println("Did you Forgot password(y/n)?");
+                String answer=scanner.next();
+                if(answer.equalsIgnoreCase("y")){
+                    System.out.println("enter new password");
+                    String newPassword = scanner.next();
+                    account.changePassword(newPassword);
+                    status=true;
+                }else{
+                    break;
+                }
+            }
         }
+    }
     }
 
     // Authenticate user
@@ -116,19 +135,15 @@ class ATM {
 }
 
 // Main class
-public class ATMInterface {
+public class ATMInterface{
     public static void main(String[] args) {
         Scanner sObj = new Scanner(System.in);
-
-        BankAccount userAccount = new BankAccount(500000.0, "1234"); 
+        BankAccount userAccount = new BankAccount(500000.0, "0000"); // initial password is 1234
         System.out.println("Welcome to ATM");
         ATM atm = new ATM(userAccount);
-
         boolean exit = false;
-
         while (!exit) {
             atm.showMenu();
-            System.out.print("Choose an option: ");
             int choice = sObj.nextInt();
 
             switch (choice) {
