@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-class NumberGame {
+class NumberGame{
     public static void main(String[] args) {
         Scanner sObj = new Scanner(System.in);
         Random random = new Random();
@@ -23,20 +23,25 @@ class NumberGame {
             System.out.println("Round " + round + ": Guess the number (between " + minRange + " and " + maxRange + ")! You have 4 attempts.");
 
             for (int attempts = 1; attempts <= 4; attempts++) {
-                System.out.print("Enter your guess: ");
-                int userGuess = sObj.nextInt();
-        
-
-                 // Check if the user's guess is out of the valid range
-                 if (userGuess < minRange || userGuess > maxRange) {
-                    System.out.println("Your guess is out of range! The valid range is between " + minRange + " and " + maxRange + ".");
-                    continue;  
+                   int userGuess=-1;
+                  while (true) {
+                    System.out.print("Enter your guess: ");
+                    try {
+                        userGuess = sObj.nextInt();
+                        if (userGuess < minRange || userGuess > maxRange) {
+                            System.out.println("Your guess is out of range! The valid range is between " + minRange + " and " + maxRange + ".");
+                            continue;                         }
+                        break;                     
+			} catch (Exception e) {
+                        System.out.println("Invalid input! Please enter an integer.");
+                        sObj.nextLine(); 
+                    }
                 }
 
                 if (userGuess == randomNumber) {
                     System.out.println("Congratulations! Your guess is correct.");
                     guessedCorrectly = true;
-                    if(attempts==4){
+                    if(attempts==1 || attempts==4){
                     roundScore += (5 - attempts);  // Score is based on attempts left
                     }else{
                         roundScore+=(4-attempts);
@@ -51,7 +56,9 @@ class NumberGame {
             if (!guessedCorrectly) {
                 System.out.println("Sorry! You've used all attempts. The correct number was " + randomNumber);
             }
-	    finalScore=+roundScore;
+	        if(roundScore>finalScore){
+                finalScore=roundScore;
+            }
             System.out.println("Your score for this round  is: " + roundScore);
 
             System.out.print("Do you want to play again? (y/n): ");
@@ -64,12 +71,12 @@ class NumberGame {
         } while (playAgain.equalsIgnoreCase("y"));
         if(!playAgain.equals("n") && !playAgain.equals("y")){
         System.out.println("As the input is invalid exiting the game ");
-        System.out.println("Thank you for playing! Your final score is: " + finalScore);
         }else{
-	System.out.println("Existing the Game..!");
-        System.out.println("Thank you for playing! Your final score is: " + finalScore);
+	    System.out.println("Existing the Game..!");
         
         }
+	// final score is the highest score of the rounds 
+        System.out.println("Thank you for playing! Your final score is: " + finalScore);
         sObj.close();
     }
 
