@@ -99,7 +99,11 @@ class ATM {
         if (account.validatePassword(currentPassword)) {
             System.out.print("Enter new password: ");
             String newPassword = scanner.next();
+            System.out.println("Enter again");
+            String secondTym=scanner.next();
+            if(secondTym.equals(newPassword)){
             account.changePassword(newPassword);
+            }
             status=true;
         } else {
             System.out.println("Incorrect password.Try again");
