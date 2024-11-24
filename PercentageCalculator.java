@@ -10,15 +10,19 @@ public class PercentageCalculator {
             System.out.println("To start , Please Enter the Number of subjects");
 
         // check for valid input for number of subjects 
-        while(true){
-            numOfSub=sObj.nextInt();
-        if(numOfSub<=0){
-            System.out.println("Invalid Input, Please enter a valid input");
-            
-        }else {
-            break;
-        }
-        }
+        while (true) {
+                if (sObj.hasNextInt()) {
+                    numOfSub = sObj.nextInt();
+                    if (numOfSub > 0) {
+                        break; 
+                    } else {
+                        System.out.println("Invalid input. Please enter a valid number greater than 0 for subjects.");
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a valid integer for the number of subjects.");
+                    sObj.next(); 
+                }
+            }
 
         float[] marksArray=new float[numOfSub];
         float totalSum=0;
@@ -26,8 +30,8 @@ public class PercentageCalculator {
 
         // Take input of marks obtained in each subject
         for (int i = 0; i < numOfSub; i++) {
-            while (true) {
                 System.out.println("Enter the marks of " + (i + 1) + " subject (0 to 100):");
+            while (true) {
                 float marks = sObj.nextFloat();
         
                 if (marks >= 0 && marks <= 100) {
